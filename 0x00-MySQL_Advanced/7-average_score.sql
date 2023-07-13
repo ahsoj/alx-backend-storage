@@ -1,8 +1,7 @@
 -- create a stored procedure `ComputeAverageScoreForUser`
 -- that computers and store the average score of a student.
-DROP PROCEDURE IF EXISTS ComputeAverageScoreForUser;
 DELIMITER $$ ;
-CREATE PROCEDURE NComputeAverageScoreForUser(
+CREATE PROCEDURE IF NOT EXISTS ComputeAverageScoreForUser(
 	IN user_id INT
 )
 BEGIN
