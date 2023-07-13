@@ -1,3 +1,3 @@
 --create am index `idx-name_first` on the table `names`
 -- and the first letter of `name`.
-CREATE INDEX idx_name_first on names(name(1))
+CREATE INDEX idx_name_first ON names(name(1))
