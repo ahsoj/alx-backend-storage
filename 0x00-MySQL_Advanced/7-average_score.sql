@@ -1,8 +1,10 @@
 -- create a stored procedure `ComputeAverageScoreForUser`
 -- that computers and store the average score of a student.
+DROP PROCEDURE IF EXISTS ComputeAverageScoreForUser;
 DELIMITER $$ ;
-CREATE PROCEDURE IF NOT EXISTS ComputeAverageScoreForUser(
-	IN user_id INT)
+CREATE PROCEDURE NComputeAverageScoreForUser(
+	IN user_id INT
+)
 BEGIN
 	UPDATE users SET average_score=(
 		SELECT AVG(score) FROM corrections
