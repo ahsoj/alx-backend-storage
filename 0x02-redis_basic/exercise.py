@@ -5,7 +5,7 @@ from uuid import uuid4
 from typing import Union
 
 
-class Cache(object):
+class Cache:
     '''represent Cache class'''
     def __init__(self):
         '''Initialize instance'''
