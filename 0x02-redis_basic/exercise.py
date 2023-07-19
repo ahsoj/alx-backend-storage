@@ -20,10 +20,11 @@ class Cache(object):
         key = str(uuid4())
         self._redis.set(key, data)
         return key
-    def get(self,key:str,fn:Callable=None) -> Union[str,int,float,bytes]:
+    
+    def get(self,key:str,fn:Callable = None) -> Union[str,int,float,bytes]:
         '''create get method'''
         value = self._redis.get(key)
-        return fn(data) if fn is not None else data
+        return fn(value) if fn is not None else value
 
     def get_str(self,key:str) -> str:
         '''return string format'''
