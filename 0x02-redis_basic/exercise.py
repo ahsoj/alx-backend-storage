@@ -5,14 +5,14 @@ from uuid import uuid4
 from typing import Union
 
 
-class Cache:
+class Cache(object):
     '''represent Cache class'''
-    def __init__(self):
+    def __init__(self) -> None:
         '''Initialize instance'''
         self._redis = redis.Redis()
         self._redis.flushdb(True)
 
-    def store(self, data: Union[str, bytes, int, float]):
+    def store(self, data: Union[str, bytes, int, float])-> str:
         '''
         class method takesa `data` arguments
         rType: str
