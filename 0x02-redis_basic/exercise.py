@@ -37,15 +37,14 @@ def replay(method: Callable) -> None:
     replays the history of a function
     rType:None
     '''
-    name = method.__qualname__
     cache = redis.Redis()
-    calls = cache.get(name).decode("utf-8")
-    print("{} was called {} times:".format(name, calls))
-    inputs = cache.lrange("{}:inputs".format(name), 0, -1)
-    outputs = cache.lrange("{}:outputs".format(name), 0, -1)
-    for in, out in zip(inputs, outputs):
+    calls = cache.get(method.__qualname__).decode("utf-8")
+    print("{} was called {} times:".format(method.__qualname__, calls))
+    inputs = cache.lrange("{}:inputs".format(method.__qualname__), 0, -1)
+    outputs = cache.lrange("{}:outputs".format(method.__qualname__), 0, -1)
+    for _in, out in zip(inputs, outputs):
         print("{}(*{}) -> {}".format(
-            name, in.decode('utf-8'),out.decode('utf-8')))                                     o.decode('utf-8')))
+            method.__qualname__, _in.decode('utf-8'),out.decode('utf-8')))
 
 
 class Cache(object):
