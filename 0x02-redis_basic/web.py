@@ -11,7 +11,7 @@ counter = 0
 def get_page(url:str) -> str:
     """obtin the HTML content of\
         a particular URL and returns it"""
-    _redis.set("cached:{}".format(url), count)
+    _redis.set("cached:{}".format(url), counter)
     response = requests.get(url)
     _redis.incr("count:{}".format(url))
     _redis.setex(
