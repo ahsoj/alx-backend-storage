@@ -3,22 +3,31 @@
 
 import redis
 import requests
+from functools import wraps
+from typing import Callable
 
 _redis = redis.Redis()
-counter = 0
 
 
+def data_cacher(method: Callable) -> Callable:
+    """implement wrapper"""
+    @wraps(method)
+    def wrapper(url) -> str:
+        _redis.incr("count:{}".format(url))
+        result = _redis.get("result:{}".format(url)) or None
+        if result is not None:
+            return result.decode('utf-8')
+        result = method(url)
+        _redis.set("count:{}".format(url), 0)
+        _redis.setex("result:{}".format(url), 10, result)
+        return result
+    return wrapper
+
+
+@data_cacher
 def get_page(url:str) -> str:
     """obtin the HTML content of\
         a particular URL and returns it"""
-    _redis.set("cached:{}".format(url), counter)
     response = requests.get(url)
-    _redis.incr("count:{}".format(url))
-    _redis.setex(
-        "cached:{}".format(url), 10, response.get("cached:{}").format(url))
     return response.text
-
-
-if __name__ == "__main__":
-    get_page('http://slowwly.robertomurray.co.uk')
 
